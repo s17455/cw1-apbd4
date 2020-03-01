@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Cwiczenia1
@@ -14,7 +15,17 @@ namespace Cwiczenia1
             if (result.IsSuccessStatusCode)
             {
                 string html = await result.Content.ReadAsStringAsync();
-                Console.WriteLine(html);
+                var regex = new Regex(
+                    "[a-z0-9]+@[a-z0-9]+\\.[a-z]+",
+                    RegexOptions.IgnoreCase
+                    );
+
+                var matches = regex.Matches(html);
+
+                foreach(var m in matches)
+                {
+                    Console.WriteLine(m);
+                }
             }
             Console.WriteLine("Koniec!");
         }
